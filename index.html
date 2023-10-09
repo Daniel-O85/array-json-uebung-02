@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-------------
+    Div für die ausgabe von 
+    Javascript in Html
+    -------------->
+    <div id="familienLIste">
+      <!-- Eintrag 0 -->
+      <div>
+        <div class="max"></div>
+        <div id="kinders"></div>
+      </div>
+      <!-- Eintrag 1 -->
+    </div>
+
+    <!---------
+        JavaScript... Start
+        --------->
+    <script>
+      const familien = [
+        {
+          Vorname: "Max",
+          Nachname: "Müller",
+          Alter: 37,
+          Kinder: ["Julian", "Sophie", "Lea"],
+          Ehepartner: {
+            Name: "Eva",
+            Geschlecht: 2,
+          },
+          Stadt: "Berlin",
+          PLZ: 123456,
+          Adresse: "Wickenweg 12",
+          Land: "Deutschland",
+        },
+        {
+          Vorname: "Brigitte",
+          Nachname: "Schäfer",
+          Alter: 33,
+          Kinder: ["Tanja", "Thorsten"],
+          Ehepartner: {
+            Name: "Harald",
+            Geschlecht: 1,
+          },
+          Stadt: "Hamburg",
+          PLZ: 123456,
+          Adresse: "Bahnhofstraße 42",
+          Land: "Deutschland",
+        },
+      ];
+
+      /********************
+       * HTML verbindung
+       ********************/
+      const verbinden = document.getElementById("familienLIste");
+
+      /*******************************
+       * Funktion lieferePersonenDaten
+       ******************************/
+      function lieferePersonenDaten(vorname, nachname, alter, ehepartner) {
+        let partner;
+        if (ehepartner.Geschlecht == 2)
+          partner = `Er ist verheiratet mit ${ehepartner.Name}`;
+        else if (ehepartner.Geschlecht == 1)
+          partner = `Sie ist verheiratet mit ${ehepartner.Name}`;
+
+        let person = `${vorname} ${nachname} ist ${alter} Jahre alt, ${partner} `;
+        return person;
+      }
+
+      /*******************************
+       * Funktion liefereKinder
+       ******************************/
+      function liefereKinder(kinder) {
+        let meineKinder = "";
+        meineKinder += `<ul>`;
+        for (let k = 0; k < kinder.length; k++)
+          meineKinder += `<li>${kinder[k]}</li>`;
+        meineKinder += `</ul>`;
+        return meineKinder;
+      }
+
+      /*******************************
+       * Funktion liefereAdresse
+       ******************************/
+      function liefereAdresse(stadt, plz, straße_hausnummer, land) {
+        let adresse = `${stadt} ${plz} ${straße_hausnummer} ${land}`;
+        return adresse;
+      }
+      /*******************************
+       * Funktion ausgabeErzeugen
+       ******************************/
+      function ausgabeErzeugen(
+        vorname,
+        nachname,
+        alter,
+        kinder,
+        ehepartner,
+        stadt,
+        plz,
+        strasse_hausnummer,
+        land
+      ) {
+        return (
+          "<div>" +
+          lieferePersonenDaten(vorname, nachname, alter, ehepartner) +
+          liefereKinder(kinder) +
+          liefereAdresse(stadt, plz, strasse_hausnummer, land) +
+          "</div>"
+        );
+      }
+
+      // for-schleife
+      for (let x = 0; x < familien.length; x++)
+        verbinden.innerHTML += ausgabeErzeugen(
+          familien[x].Vorname,
+          familien[x].Nachname,
+          familien[x].Alter,
+          familien[x].Kinder,
+          familien[x].Ehepartner,
+          familien[x].Stadt,
+          familien[x].PLZ,
+          familien[x].Adresse,
+          familien[x].Land
+        );
+    </script>
+  </body>
+</html>
